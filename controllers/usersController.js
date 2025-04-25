@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs")
+
 const queries = require("../db/usersQueries.js")
 
 
