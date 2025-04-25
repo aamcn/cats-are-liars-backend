@@ -3,6 +3,8 @@ const queries = require("../db/usersQueries.js")
 const asyncHandler = require("express-async-handler");
 
 
+
+
 async function createNewUser(req, res) {
     const username = req.body.username 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -15,17 +17,26 @@ async function createNewUser(req, res) {
     }
 }
 
-async function allUsernames(req, res) {
+const allUsernames = asyncHandler(async (req, res) => {
+    
     const usernames =  await queries.getAllUsernames();
-    console.log(usernames.rows)
+    
+    if(!usernames){
+        res.status(404).send("Users not found");
+        return;
+    }
     res.send(usernames.rows)
- } 
+ })
+
+const getUserById = asyncHandler(async (req, res) => {
  
-async function getUserById(req, res) {
-    const id = req.body.id
+    const id = req.body.userId
     const user = await queries.userById(id);
-    console.log(user.rows)
+    if(!user){
+        res.status(404).send("User not found");
+        return;
+    }
     res.send(user.rows)
-}
+})
 
 module.exports = { allUsernames, createNewUser, getUserById}
