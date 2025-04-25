@@ -33,4 +33,8 @@ async function updateCat(name, meals, medication, catid){
       ])
 }
 
-module.exports = { addCatToTable, allCats, catByName, catByCatId, updateCat }; 
+async function addCatFeeder(userId, catId){
+    const addFeeder = await pool.query("UPDATE cats SET feeder_userid = feeder_userid || ($1) WHERE catid = ($2)", [[userId], catId])
+}
+
+module.exports = { addCatToTable, allCats, catByName, catByCatId, updateCat, addCatFeeder}; 

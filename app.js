@@ -60,7 +60,11 @@ passport.use(
   })
   
   app.get("/in", (req, res) => {
-    res.send(req.user)
+    if(req.user){
+      res.send(req.user.username)
+    } else {
+      res.send('No user')
+    }
   });
   
   app.get("/log-out", (req, res, next) => {

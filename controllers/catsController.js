@@ -18,12 +18,20 @@ async function updateCatDetails(req, res, next) {
    const catMeals = req.body.newMeals
    const catMedication = req.body.newMedication
    const catId = req.params.catId
+   
    try{
       await queries.updateCat(catName, catMeals, catMedication, catId)
       res.send('success')
        } catch(err) {
            return next(err)
        }
+}
+
+async function addCatFeederById(req, res){
+   const userId = req.body.userId
+   const catId = req.body.catId
+   await queries.addCatFeeder(userId, catId)
+   res.send('update')
 }
 
 async function getAllCats(req, res) {
@@ -47,4 +55,11 @@ async function getCatByCatId(req, res) {
     res.send(catQueryId.rows)
  }
 
-module.exports = { addCatToTable, getAllCats, getCatByName, getCatByCatId, updateCatDetails}
+module.exports = { 
+   addCatToTable, 
+   getAllCats, 
+   getCatByName, 
+   getCatByCatId, 
+   updateCatDetails, 
+   addCatFeederById
+}
