@@ -5,7 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 const usersRouter = require("./routes/usersRouter")
-// const catsRouter = require("./routes/catsRouter")
+const catsRouter = require("./routes/catsRouter")
 const pool = require("./db/pool");
 const { bcrypt, compare } = require('bcryptjs');
 const app = express();
@@ -14,7 +14,7 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true}));
 app.use("/users", usersRouter);
-// app.use("/cats", catsRouter);
+app.use("/cats", catsRouter);
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
