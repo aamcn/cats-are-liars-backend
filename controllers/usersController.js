@@ -1,6 +1,6 @@
 
 const queries = require("../db/usersQueries.js")
-
+const asyncHandler = require("express-async-handler");
 
 
 async function createNewUser(req, res) {

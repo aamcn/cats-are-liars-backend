@@ -1,5 +1,5 @@
 const queries = require("../db/catsQueries")
-
+const asyncHandler = require("express-async-handler");
 
 async function addCatToTable(req, res, next) {
    const catName = req.body.newCatName

@@ -4,6 +4,8 @@ const feedHistoryRouter = Router();
 
 
 feedHistoryRouter.get("/all", feedHistoryController.getAllFeedEntries);
+feedHistoryRouter.get("/entry-id/:entryId/get/", feedHistoryController.getFeedEntryByID);
+feedHistoryRouter.get("/cat-name/:catName/get/", feedHistoryController.getEntriesByCatName);
 
 
 module.exports = feedHistoryRouter;  
