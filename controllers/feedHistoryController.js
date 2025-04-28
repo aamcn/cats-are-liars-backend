@@ -30,4 +30,11 @@ const getEntriesByCatName = asyncHandler(async (req, res) => {
   res.send(feedEntries.rows);
 });
 
-module.exports = { getAllFeedEntries, getFeedEntryByID, getEntriesByCatName };
+const addFeedingEntry = asyncHandler(async (req, res) => {
+    console.log('hi')
+    const entry = req.body
+    const t = await queries.insertFeedingEntry(entry)
+    res.send('Entry sent')
+})
+
+module.exports = { getAllFeedEntries, getFeedEntryByID, getEntriesByCatName, addFeedingEntry };

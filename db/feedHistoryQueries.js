@@ -17,4 +17,10 @@ async function entriesByCatName(catName) {
   );
 }
 
-module.exports = { allEntries, entryById, entriesByCatName };
+async function insertFeedingEntry(entry){
+
+  await pool.query("INSERT INTO feeding_history (catid, cat_name, feeder_id, feeder_username, medication_needed, medication_given, time, notes) values ($1, $2, $3, $4, $5, $6, $7, $8)", [ entry.catId, entry.catName, entry.userId, entry.username, entry.medicationNeeded, entry.medicationGiven, entry.time, entry.notes ],
+  );
+}
+
+module.exports = { allEntries, entryById, entriesByCatName, insertFeedingEntry };
