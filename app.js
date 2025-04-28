@@ -1,5 +1,5 @@
 require("dotenv").config();
-const path = require("node:path");
+const jwt = require('jsonwebtoken');
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -8,7 +8,8 @@ const usersRouter = require("./routes/usersRouter");
 const catsRouter = require("./routes/catsRouter");
 const feedHistoryRouter = require("./routes/feedHistoryRouter");
 const pool = require("./db/pool");
-const { bcrypt, compare } = require("bcryptjs");
+const { bcrypt, compare } = require("bcryptjs")
+const verifyToken = require("./verifyToken")
 const app = express();
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
@@ -51,28 +52,12 @@ passport.deserializeUser(async (id, done) => {
       id,
     ]);
     const user = rows[0];
-
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
 
-app.get("/login-success", (req, res) => {
-  res.send("Success");
-});
-
-app.get("/login-fail", (req, res) => {
-  res.send("fail");
-});
-
-app.get("/in", (req, res) => {
-  if (req.user) {
-    res.send(req.user.username);
-  } else {
-    res.send("No user");
-  }
-});
 
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {
@@ -83,12 +68,40 @@ app.get("/log-out", (req, res, next) => {
   });
 });
 
-app.post(
-  "/users/log-in",
+app.post('/posts', verifyToken.verifyToken, (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err, authData) =>{
+    if(err) {
+      res.sendStatus(403)
+    } else {
+    res.json({
+    message: 'Hiya...',
+    authData
+  })
+    }
+  })
+})
+
+
+
+app.post("/users/log-in",
   passport.authenticate("local", {
     successRedirect: "/login-success",
     failureRedirect: "/login-fail",
   }),
 );
+
+app.get("/login-success", (req, res) => {
+  const user = req.user
+  jwt.sign({user: user}, 'secretkey', {expiresIn: '30m'}, (err,token) => {
+    res.json({
+      token
+    })
+  })
+});
+
+app.get("/login-fail", (req, res) => {
+  res.send("fail");
+});
+
 
 app.listen(3000, () => console.log("app listening on port 3000!"));

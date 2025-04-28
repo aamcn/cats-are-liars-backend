@@ -1,4 +1,7 @@
 const { Router } = require("express");
+const verifyToken = require("../verifyToken")
+
+
 const {
   allUsernames,
   createNewUser,
@@ -7,7 +10,8 @@ const {
 const usersRouter = Router();
 
 usersRouter.post("/sign-up", createNewUser);
-usersRouter.get("/usernames", allUsernames);
-usersRouter.get("/user-by-id", getUserById);
+usersRouter.get("/usernames",  verifyToken.verifyToken,  allUsernames);
+usersRouter.get("/user-by-id", verifyToken.verifyToken,  getUserById);
 
 module.exports = usersRouter;
+

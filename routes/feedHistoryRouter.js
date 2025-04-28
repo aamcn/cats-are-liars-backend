@@ -1,13 +1,14 @@
 const { Router } = require("express");
 const feedHistoryController = require("../controllers/feedHistoryController");
 const feedHistoryRouter = Router();
+const verifyToken = require("../verifyToken")
 
-feedHistoryRouter.get("/all", feedHistoryController.getAllFeedEntries);
-feedHistoryRouter.get("/entry-id/:entryId/get/",feedHistoryController.getFeedEntryByID);
-feedHistoryRouter.get("/cat-name/:catName/get/",feedHistoryController.getEntriesByCatName);
+feedHistoryRouter.get("/all", verifyToken.verifyToken, feedHistoryController.getAllFeedEntries);
+feedHistoryRouter.get("/entry-id/:entryId/get/", verifyToken.verifyToken, feedHistoryController.getFeedEntryByID);
+feedHistoryRouter.get("/cat-name/:catName/get/", verifyToken.verifyToken,  feedHistoryController.getEntriesByCatName);
 
-feedHistoryRouter.post("/submit-feeding", feedHistoryController.addFeedingEntry);
-feedHistoryRouter.post("/delete-feeding", feedHistoryController.deleteEntryById);
+feedHistoryRouter.post("/submit-feeding", verifyToken.verifyToken, feedHistoryController.addFeedingEntry);
+feedHistoryRouter.post("/delete-feeding", verifyToken.verifyToken, feedHistoryController.deleteEntryById);
 
 
 module.exports = feedHistoryRouter;
