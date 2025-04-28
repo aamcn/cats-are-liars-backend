@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler");
 
 const jwt = require('jsonwebtoken');
 
+
+
 async function addCatToTable(req, res, next) {
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
     if (err) {
@@ -22,6 +24,8 @@ async function addCatToTable(req, res, next) {
     return next(err);
   }
 }
+
+
 
 async function updateCatDetails(req, res, next) {
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
@@ -45,6 +49,8 @@ async function updateCatDetails(req, res, next) {
   }
 }
 
+
+
 async function addCatFeederById(req, res) {
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
     if (err) {
@@ -59,6 +65,7 @@ async function addCatFeederById(req, res) {
   await queries.addCatFeeder(newFeederId, catId, userId);
   res.send("update");
 }
+
 
 async function getAllCats(req, res) {
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {

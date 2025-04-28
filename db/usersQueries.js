@@ -1,9 +1,12 @@
 const pool = require("./pool");
 
+
+// Returns all usernames stored in the 'users' table. 
 async function getAllUsernames() {
   return await pool.query("SELECT username FROM users;");
 }
 
+// Inserts a new user into the table using the passed in arguments as its values.
 async function addUser(username, password) {
   const newUser = await pool.query(
     "INSERT INTO users (username, password) VALUES ($1, $2)",
@@ -11,9 +14,10 @@ async function addUser(username, password) {
   );
 }
 
-async function userById(id) {
+// Finds and returns the row where the id matches the 'id' argument.
+async function userById(userId) {
   console.log(id);
-  return await pool.query("SELECT username FROM users WHERE id = ($1)", [id]);
+  return await pool.query("SELECT username FROM users WHERE id = ($1)", [userId]);
 }
 
 module.exports = { getAllUsernames, addUser, userById };
