@@ -1,42 +1,36 @@
-
-const queries = require("../db/usersQueries.js")
+const queries = require("../db/usersQueries.js");
 const asyncHandler = require("express-async-handler");
 
-
-
-
 async function createNewUser(req, res) {
-    const username = req.body.username 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    
-    try{
-        await queries.addUser(username, hashedPassword)
-        res.send('yay')
-    } catch(err) {
-        return next(err)
-    }
+  const username = req.body.username;
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+  try {
+    await queries.addUser(username, hashedPassword);
+    res.send("yay");
+  } catch (err) {
+    return next(err);
+  }
 }
 
 const allUsernames = asyncHandler(async (req, res) => {
-    
-    const usernames =  await queries.getAllUsernames();
-    
-    if(!usernames){
-        res.status(404).send("Users not found");
-        return;
-    }
-    res.send(usernames.rows)
- })
+  const usernames = await queries.getAllUsernames();
+
+  if (!usernames) {
+    res.status(404).send("Users not found");
+    return;
+  }
+  res.send(usernames.rows);
+});
 
 const getUserById = asyncHandler(async (req, res) => {
- 
-    const id = req.body.userId
-    const user = await queries.userById(id);
-    if(!user){
-        res.status(404).send("User not found");
-        return;
-    }
-    res.send(user.rows)
-})
+  const id = req.body.userId;
+  const user = await queries.userById(id);
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+  res.send(user.rows);
+});
 
-module.exports = { allUsernames, createNewUser, getUserById}
+module.exports = { allUsernames, createNewUser, getUserById };
