@@ -7,6 +7,7 @@ feedHistoryRouter.get("/entry-id/:entryId/get/",feedHistoryController.getFeedEnt
 feedHistoryRouter.get("/cat-name/:catName/get/",feedHistoryController.getEntriesByCatName);
 
 feedHistoryRouter.post("/submit-feeding", feedHistoryController.addFeedingEntry);
+feedHistoryRouter.post("/delete-feeding", feedHistoryController.deleteEntryById);
 
 
 module.exports = feedHistoryRouter;
