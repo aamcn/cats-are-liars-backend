@@ -3,7 +3,6 @@ const { bcrypt, hash} = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 
 
-
 async function createNewUser(req, res, next) {
   try {
     const username = req.body.username;

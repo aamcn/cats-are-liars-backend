@@ -1,6 +1,5 @@
 const queries = require("../db/catsQueries");
 const asyncHandler = require("express-async-handler");
-
 const jwt = require('jsonwebtoken');
 
 
