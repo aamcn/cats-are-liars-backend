@@ -6,6 +6,13 @@ async function allEntries(userId) {
   return await pool.query("SELECT * FROM feeding_history WHERE ($1)=ANY(authorised_feeders);", [userId]);
 }
 
+async function allByMonthYear(monthYear, userId) {
+  return await pool.query(`SELECT * FROM feeding_history WHERE date::text LIKE '${monthYear}%' AND '${userId}'=ANY(authorised_feeders);`)
+}
+
+async function allByYear(year, userId) {
+  return await pool.query(`SELECT * FROM feeding_history WHERE date::text LIKE '${year}%' AND '${userId}'=ANY(authorised_feeders);`)
+}
 
 // Finds and returns the row where the id matches the 'entryId' argument.
 async function entryById(entryId, userId) {
@@ -31,4 +38,4 @@ async function deleteEntryById(entryId, userId){
   await pool.query("DELETE FROM feeding_history WHERE id = ($1) AND feeder_id = ($2)", [entryId, userId])
 }
 
-module.exports = { allEntries, entryById, entriesByCatName, insertFeedingEntry, deleteEntryById};
+module.exports = { allEntries, entryById, entriesByCatName, insertFeedingEntry, deleteEntryById, allByMonthYear, allByYear};

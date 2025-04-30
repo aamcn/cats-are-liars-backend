@@ -80,6 +80,7 @@ async function getAllCats(req, res) {
 }
 
 async function getCatByName(req, res) {
+  console.log('hi')
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
     if (err) {
       res.sendStatus(403)

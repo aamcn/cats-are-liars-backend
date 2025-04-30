@@ -20,6 +20,45 @@ const getAllFeedEntries = asyncHandler(async (req, res) => {
   res.send(history.rows);
 });
 
+const getEntriesByMonthYear = asyncHandler(async (req, res) => {
+  const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      return authData
+    }
+  })
+  const userId = authUser.user.id
+  const monthYear = req.body.monthYear
+  
+  const history = await queries.allByMonthYear(monthYear, userId);
+  if (!history) {
+    res.status(404).send("History not found");
+    return;
+  }
+  res.send(history.rows);
+});
+
+
+const getEntriesByYear = asyncHandler(async (req, res) => {
+  const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      return authData
+    }
+  })
+  const userId = authUser.user.id
+  const year = req.body.year
+  
+  const history = await queries.allByYear(year, userId);
+  if (!history) {
+    res.status(404).send("History not found");
+    return;
+  }
+  res.send(history.rows);
+});
+
 const getFeedEntryByID = asyncHandler(async (req, res) => {
   const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
     if (err) {
@@ -84,4 +123,4 @@ const deleteEntryById = asyncHandler(async(req, res) => {
     res.send('Entry Deleted')
 })
 
-module.exports = { getAllFeedEntries, getFeedEntryByID, getEntriesByCatName, addFeedingEntry, deleteEntryById};
+module.exports = { getAllFeedEntries, getFeedEntryByID, getEntriesByCatName, addFeedingEntry, deleteEntryById, getEntriesByMonthYear ,getEntriesByYear};
