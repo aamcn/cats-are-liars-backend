@@ -16,7 +16,6 @@ async function addUser(username, password) {
 
 // Finds and returns the row where the id matches the 'id' argument.
 async function userById(userId) {
-  console.log(id);
   return await pool.query("SELECT username FROM users WHERE id = ($1)", [userId]);
 }
 

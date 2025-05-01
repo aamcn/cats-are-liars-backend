@@ -25,7 +25,7 @@ const allUsernames = asyncHandler(async (req, res) => {
 });
 
 const getUserById = asyncHandler(async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   const user = await queries.userById(userId);
   if (!user) {
     res.status(404).send("User not found");

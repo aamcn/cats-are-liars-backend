@@ -13,9 +13,10 @@ async function addCatToTable(req, res, next) {
     }
   })
   const userId = authUser.user.id
-  const catName = req.body.newCatName;
-  const catMeals = req.body.newCatMeals;
-  const catMedication = req.body.newCatMedication;
+  const catName = req.body.body.newCatName;
+  const catMeals = req.body.body.newCatMeals.split(',');
+  const catMedication = req.body.body.newCatMedication.split(',');
+  console.log(req.body)
   try {
     await queries.addCatToTable(catName, catMeals, catMedication, userId);
     res.send("success");
@@ -36,10 +37,9 @@ async function updateCatDetails(req, res, next) {
   })
   const userId = authUser.user.id
   const catName = req.body.newName;
-  const catMeals = req.body.newMeals;
+  const catMeals = req.body.newMeals.split(',');
   const catMedication = req.body.newMedication;
   const catId = req.params.catId;
-
   try {
     await queries.updateCat(catName, catMeals, catMedication, catId, userId);
     res.send("success");
