@@ -28,8 +28,8 @@ async function entriesByCatName(catName, userId) {
 }
 
 // Inserts a new row(entry) into the table with the passed in arguments as its values.
-async function insertFeedingEntry(entry, userId){
-  await pool.query("INSERT INTO feeding_history (catid, cat_name, feeder_id, feeder_username, medication_needed, medication_given, time, notes, authorised_feeders) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [ entry.catId, entry.catName, userId, entry.username, entry.medicationNeeded, entry.medicationGiven, entry.time, entry.notes, entry.authorisedFeeders],
+async function insertFeedingEntry(entry, user){
+  await pool.query("INSERT INTO feeding_history (catid, cat_name, feeder_id, feeder_username, medication_needed, medication_given, time, notes, authorised_feeders) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [ entry.catid, entry.cat_name, user.id, entry.feeder_username, entry.medication_needed, entry.medication_given, entry.time, entry.notes, entry.authorised_feeders.split(',')],
   );
 }
 

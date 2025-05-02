@@ -103,9 +103,10 @@ const addFeedingEntry = asyncHandler(async (req, res) => {
       return authData
     }
   })
-  const userId = authUser.user.id
-    const entry = req.body
-    await queries.insertFeedingEntry(entry, userId)
+    const user = authUser.user
+    const entry = req.body.body
+    console.log(entry)
+    await queries.insertFeedingEntry(entry, user)
     res.send('Entry sent')
 })
 
