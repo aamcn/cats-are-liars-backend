@@ -35,7 +35,6 @@ passport.use(
   new LocalStrategy(async (username, password, done) => {
     
     try {
-      
       const { rows } = await pool.query(
         "SELECT * FROM users WHERE username = $1",
         [username],
@@ -43,7 +42,7 @@ passport.use(
       const user = rows[0];
       // If no user is found, error message is returned
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: "Incorrect username" } );
       }
       //If user is found, the entered password is hashed and compared to the stored password.
       const match = await compare(password, user.password);
@@ -116,7 +115,6 @@ app.post("/log-in",
     const user = req.user
     const userId = req.user.id
     const username = req.user.username
-
   // json web tokens currently expire after 30 minutes and the user must log in again to receive a new token to make database queries.
   jwt.sign({user}, 'secretkey', {expiresIn: '30m'}, (err,token) => {
     res.json({
@@ -131,7 +129,6 @@ app.post("/log-in",
 
 
 app.get("/login-fail", (req, res) => {
-  console.log(req.body)
   res.send("fail");
 });
 

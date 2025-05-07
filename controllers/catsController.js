@@ -23,7 +23,7 @@ async function addCatToTable(req, res, next) {
   } catch (err) {
     return next(err);
   }
-}
+} 
 
 
 
@@ -35,10 +35,11 @@ async function updateCatDetails(req, res, next) {
       return authData
     }
   })
+  console.log(req.body)
   const userId = authUser.user.id
-  const catName = req.body.newName;
-  const catMeals = req.body.newMeals.split(',');
-  const catMedication = req.body.newMedication;
+  const catName = req.body.formData.newName;
+  const catMeals = req.body.formData.newMeals.split(',');
+  const catMedication = req.body.formData.newMedication.split(',');
   const catId = req.params.catId;
   try {
     await queries.updateCat(catName, catMeals, catMedication, catId, userId);
