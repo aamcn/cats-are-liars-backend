@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const pool = require("./db/pool");
-const { bcrypt, compare } = require("bcryptjs")
+const { compare } = require("bcryptjs")
 const verifyToken = require("./verifyToken")
 
 const usersRouter = require("./routes/usersRouter");
@@ -18,7 +18,7 @@ const app = express();
 
 app.use(cors())
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false,  cookie: { secure: true }}));
+app.use(session({ secret: "Magic Word", resave: false, saveUninitialized: false,  cookie: { secure: true }}));
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,7 +30,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", usersRouter);
 app.use("/cats", catsRouter);
 app.use("/feed-history", feedHistoryRouter);
-//Finds username in the 'users' table and checks if the entered username and password match. 
+
+
+/*
+Finds username in the 'users' table and checks if the user submitted username and password match the stored 
+username and password. 
+*/
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     
@@ -90,21 +95,6 @@ app.get("/log-out", (req, res, next) => {
   });
 });
 
-
-
-app.post('/posts', verifyToken.verifyToken, (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err, authData) =>{
-    if(err) {
-      res.sendStatus(403)
-    } else {
-    res.json({
-    message: 'Hiya...',
-    authData
-  })
-    }
-  })
-})
-
 /* 
 When user click enter on the log in form the entered password and username are authenticated using passport. 
 depending on succesful or unsuccesful log in the browser redirects to the assigned url. 
@@ -126,8 +116,7 @@ app.post("/log-in",
   }
 );
 
-
-
+// Returns log in fail message.
 app.get("/login-fail", (req, res) => {
   res.send("fail");
 });
