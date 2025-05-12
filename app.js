@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const pool = require("./db/pool");
-const { compare } = require("bcryptjs")
+const { bcrypt, compare } = require("bcryptjs")
 const verifyToken = require("./verifyToken")
 
 const usersRouter = require("./routes/usersRouter");
@@ -18,7 +18,7 @@ const app = express();
 
 app.use(cors())
 
-app.use(session({ secret: "Magic Word", resave: false, saveUninitialized: false,  cookie: { secure: true }}));
+app.use(session({ secret: "cats", resave: false, saveUninitialized: false,  cookie: { secure: true }}));
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
