@@ -11,20 +11,15 @@ Technologies:
     Passport
     PSQL
 
-
 Getting Started
 
 Prerequisites:
 
     NodeJS
 
-Cloning:
-
-    git clone cats-are-liars-backend-github
-
-
 Starting: 
 
+    clone repository
     cd cats-are-liars-backend
     Install dependencies
     node --watch app.js

@@ -9,7 +9,7 @@ async function createNewUser(req, res, next) {
     const password = req.body.password
     const hashedPassword = await hash(password, 10);
     await queries.addUser(username, hashedPassword);
-    res.send("yay");
+    res.send("Success");
   } catch (err) {
     return next(err);
   }
