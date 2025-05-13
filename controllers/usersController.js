@@ -48,7 +48,7 @@ const getUsersByHouseholdId = asyncHandler(async (req, res) =>{
   if(!householdUsers){
     res.status(404).send("Users not found")
   }
-  res.send(householdUsers)
+  res.send(householdUsers.rows)
 })
 
 module.exports = { allUsernames, createNewUser, getUserById, getUsersByHouseholdId };

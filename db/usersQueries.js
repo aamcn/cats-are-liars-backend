@@ -20,7 +20,9 @@ async function userById(userId) {
 }
 
 async function getAllByHouseholdId(householdId){
-  return await pool.query("SELECT id, username, role FROM users WHERE household_id = ($1)", [householdId])
+  return await pool.query("SELECT id, username, household_name, role FROM users INNER JOIN household ON users.household_id = ($1)", [householdId])
 }
 
 module.exports = { getAllUsernames, addUser, userById, getAllByHouseholdId};
+
+
