@@ -1,5 +1,6 @@
 const queries = require("../db/usersQueries.js");
 const { bcrypt, hash} = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 const asyncHandler = require("express-async-handler");
 
 
@@ -34,4 +35,20 @@ const getUserById = asyncHandler(async (req, res) => {
   res.send(user.rows);
 });
 
-module.exports = { allUsernames, createNewUser, getUserById };
+const getUsersByHouseholdId = asyncHandler(async (req, res) =>{
+  const authUser = jwt.verify(req.token, 'secretkey', (err, authData) => {
+      if (err) {
+        res.sendStatus(403)
+      } else {
+        return authData
+      }
+    })
+  const householdId = authUser.user.household_id
+  const householdUsers = await queries.getAllByHouseholdId(householdId)
+  if(!householdUsers){
+    res.status(404).send("Users not found")
+  }
+  res.send(householdUsers)
+})
+
+module.exports = { allUsernames, createNewUser, getUserById, getUsersByHouseholdId };

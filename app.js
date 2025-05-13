@@ -105,12 +105,15 @@ app.post("/log-in",
     const user = req.user
     const userId = req.user.id
     const username = req.user.username
+    const role = req.user.role
+    const householdId = req.user.household_id
   // json web tokens currently expire after 30 minutes and the user must log in again to receive a new token to make database queries.
   jwt.sign({user}, 'secretkey', {expiresIn: '30m'}, (err,token) => {
     res.json({
       token, 
       userId,
-      username
+      username,
+      role, householdId
     })
   })
   }

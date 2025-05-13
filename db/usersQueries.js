@@ -19,4 +19,8 @@ async function userById(userId) {
   return await pool.query("SELECT username FROM users WHERE id = ($1)", [userId]);
 }
 
-module.exports = { getAllUsernames, addUser, userById };
+async function getAllByHouseholdId(householdId){
+  return await pool.query("SELECT id, username, role FROM users WHERE household_id = ($1)", [householdId])
+}
+
+module.exports = { getAllUsernames, addUser, userById, getAllByHouseholdId};
