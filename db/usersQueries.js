@@ -1,7 +1,6 @@
 const pool = require("./pool");
 
-
-// Returns all usernames stored in the 'users' table. 
+// Returns all usernames stored in the 'users' table.
 async function getAllUsernames() {
   return await pool.query("SELECT username FROM users;");
 }
@@ -16,13 +15,16 @@ async function addUser(username, password) {
 
 // Finds and returns the row where the id matches the 'id' argument.
 async function userById(userId) {
-  return await pool.query("SELECT username FROM users WHERE id = ($1)", [userId]);
+  return await pool.query("SELECT username FROM users WHERE id = ($1)", [
+    userId,
+  ]);
 }
 
-async function getAllByHouseholdId(householdId){
-  return await pool.query("SELECT id, username, household_name, role FROM users INNER JOIN household ON users.household_id = ($1)", [householdId])
+async function getAllByHouseholdId(householdId) {
+  return await pool.query(
+    "SELECT id, username, household_name, role FROM users INNER JOIN household ON users.household_id = ($1)",
+    [householdId],
+  );
 }
 
-module.exports = { getAllUsernames, addUser, userById, getAllByHouseholdId};
-
-
+module.exports = { getAllUsernames, addUser, userById, getAllByHouseholdId };

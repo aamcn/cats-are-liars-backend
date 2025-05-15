@@ -1,20 +1,27 @@
 const pool = require("./pool");
 
-
 // Returns all rows from the 'cats' table that contain a feeder_userid that matches the passed in argument
 async function allCats(userId) {
-  console.log(userId)
-  return await pool.query("SELECT * FROM cats WHERE  ($1)=ANY(feeder_userid)", [userId]);
+  console.log(userId);
+  return await pool.query("SELECT * FROM cats WHERE  ($1)=ANY(feeder_userid)", [
+    userId,
+  ]);
 }
 
 // Returns table row with both a name matching the 'catName' argument and a feeder_userid matching the 'userId' argument.
 async function catByName(catName, userId) {
-  return await pool.query("SELECT * FROM cats WHERE name = ($1) AND ($2)=ANY(feeder_userid)", [catName, userId]);
+  return await pool.query(
+    "SELECT * FROM cats WHERE name = ($1) AND ($2)=ANY(feeder_userid)",
+    [catName, userId],
+  );
 }
 
 // Returns table row with both a catId matching the 'catId' argument and a feeder_userid matching the 'userId' argument.
 async function catByCatId(catId, userId) {
-  return await pool.query("SELECT * FROM cats WHERE catId = ($1) AND ($2)=ANY(feeder_userid)", [catId, userId]);
+  return await pool.query(
+    "SELECT * FROM cats WHERE catId = ($1) AND ($2)=ANY(feeder_userid)",
+    [catId, userId],
+  );
 }
 
 // Inserts a new row into the 'cats' table and populates it's columns with the passed in arguments.
