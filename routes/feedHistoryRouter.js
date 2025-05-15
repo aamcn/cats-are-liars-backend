@@ -18,11 +18,7 @@ feedHistoryRouter.get(
   verifyToken.verifyToken,
   feedHistoryController.getEntriesByCatName,
 );
-feedHistoryRouter.get(
-  "/all/month-year",
-  verifyToken.verifyToken,
-  feedHistoryController.getEntriesByMonthYear,
-);
+
 feedHistoryRouter.get(
   "/all/year",
   verifyToken.verifyToken,
@@ -45,5 +41,12 @@ feedHistoryRouter.post(
   verifyToken.verifyToken,
   feedHistoryController.getAllBetweenDates,
 );
+
+feedHistoryRouter.post(
+  "/all/month-year",
+  verifyToken.verifyToken,
+  feedHistoryController.getEntriesByMonthYear,
+);
+
 
 module.exports = feedHistoryRouter;

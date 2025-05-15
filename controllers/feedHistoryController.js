@@ -47,9 +47,9 @@ const getEntriesByMonthYear = asyncHandler(async (req, res) => {
     }
   });
   const userId = authUser.user.id;
-  const monthYear = req.body.monthYear;
-
-  const history = await queries.allByMonthYear(monthYear, userId);
+  const year = req.body.date.year;
+  const month = req.body.date.month;
+  const history = await queries.allByMonthYear(month, year, userId);
   if (!history) {
     res.status(404).send("History not found");
     return;

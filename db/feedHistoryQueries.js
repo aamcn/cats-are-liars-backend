@@ -16,9 +16,9 @@ async function allEntriesBetweenDates(fromDate, toDate, userId) {
   );
 }
 
-async function allByMonthYear(monthYear, userId) {
+async function allByMonthYear(month, year, userId) {
   return await pool.query(
-    `SELECT * FROM feeding_history WHERE date::text LIKE '${monthYear}%' AND '${userId}'=ANY(authorised_feeders);`,
+    `SELECT * FROM feeding_history WHERE date::text LIKE '${year}-${month}%' AND '${userId}'=ANY(authorised_feeders);`,
   );
 }
 
