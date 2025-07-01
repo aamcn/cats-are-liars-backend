@@ -8,8 +8,6 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const pool = require("./db/pool");
-const { bcrypt, compare } = require("bcryptjs");
-const verifyToken = require("./verifyToken");
 
 const usersRouter = require("./routes/usersRouter");
 const catsRouter = require("./routes/catsRouter");
