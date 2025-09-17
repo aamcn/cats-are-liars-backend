@@ -37,6 +37,12 @@ app.get("/api/public", function (req, res) {
   });
 });
 
+app.get("/api/private", jwtCheck, function (req, res) {
+  res.json({
+    message:
+      "Hello from a private endpoint! You need to be authenticated to see this.",
+  });
+});
 
 
 app.listen(3000, () => console.log("app listening on port 3000!"));
