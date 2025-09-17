@@ -10,32 +10,28 @@ const { jwtCheck } = require("./verify/jwtCheck");
 
 const app = express();
 
-// app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(passport.authenticate("session"));
 app.use(cookieParser());
-// app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
-
 
 // enforce on all endpoints
 // app.use(jwtCheck);
 
-
+//Routes are chained with jwtCheck middleware to enforce authentication.
 app.use("/users", jwtCheck, usersRouter);
 app.use("/cats", jwtCheck, catsRouter);
 app.use("/feed-history", jwtCheck, feedHistoryRouter);
 
-
+//Test endpoints for public and private access
 app.get("/api/public", function (req, res) {
   res.json({
     message: "hello from the public api",
   });
 });
 
+//Test endpoints for public and private access
 app.get("/api/private", jwtCheck, function (req, res) {
   res.json({
     message:
@@ -43,6 +39,4 @@ app.get("/api/private", jwtCheck, function (req, res) {
   });
 });
 
-
 app.listen(3000, () => console.log("app listening on port 3000!"));
-
