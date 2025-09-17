@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const { auth, requiredScopes } = require("express-oauth2-jwt-bearer");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const usersRouter = require("./routes/usersRouter");
 const catsRouter = require("./routes/catsRouter");
 const feedHistoryRouter = require("./routes/feedHistoryRouter");
+const { jwtCheck } = require("./verify/jwtCheck");
 
 const app = express();
 
@@ -19,17 +19,16 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/users", usersRouter);
-app.use("/cats", catsRouter);
-app.use("/feed-history", feedHistoryRouter);
 
-const jwtCheck = auth({
-  audience: "http://localhost:3000/",
-  issuerBaseURL: process.env.ISSUER_BASE_URL,
-});
 
 // enforce on all endpoints
 // app.use(jwtCheck);
+
+
+app.use("/users", jwtCheck, usersRouter);
+app.use("/cats", jwtCheck, catsRouter);
+app.use("/feed-history", jwtCheck, feedHistoryRouter);
+
 
 app.get("/api/public", function (req, res) {
   res.json({
