@@ -1,27 +1,28 @@
 const queries = require("../db/usersQueries.js");
-const { bcrypt, hash } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
 async function createNewUser(req, res, next) {
   try {
     const username = req.body.username;
-    const password = req.body.password;
-    const hashedPassword = await hash(password, 10);
-    await queries.addUser(username, hashedPassword);
-    res.send("yay");
+    await queries.addUser(username);
+    res.send("Added user");
   } catch (err) {
     return next(err);
   }
 }
 
-const allUsernames = asyncHandler(async (req, res) => {
-  const usernames = await queries.getAllUsernames();
-  if (!usernames) {
-    res.status(404).send("Users not found");
-    return;
+const allUsernames = asyncHandler(async (req, res, next) => {
+  try {
+    const usernames = await queries.getAllUsernames();
+    if (!usernames) {
+      res.status(404).send("Users not found");
+      return;
+    }
+    res.send(usernames.rows);
+  } catch (err) {
+    return next(err);
   }
-  res.send(usernames.rows);
 });
 
 const getUserById = asyncHandler(async (req, res) => {

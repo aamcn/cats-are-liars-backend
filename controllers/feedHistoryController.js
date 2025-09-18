@@ -26,17 +26,21 @@ const getAllBetweenDates = asyncHandler(async (req, res) => {
     } else {
       return authData;
     }
-  }); 
+  });
   const userId = authUser.user.id;
-  const fromDate = req.body.dates.fromDate
-  const toDate = req.body.dates.toDate
-  const entries = await queries.allEntriesBetweenDates(fromDate, toDate, userId);
+  const fromDate = req.body.dates.fromDate;
+  const toDate = req.body.dates.toDate;
+  const entries = await queries.allEntriesBetweenDates(
+    fromDate,
+    toDate,
+    userId
+  );
   if (!entries) {
     res.status(404).send("Entries not found");
     return;
   }
   res.send(entries.rows);
-})
+});
 
 const getEntriesByMonthYear = asyncHandler(async (req, res) => {
   const authUser = jwt.verify(req.token, "secretkey", (err, authData) => {
@@ -149,5 +153,5 @@ module.exports = {
   deleteEntryById,
   getEntriesByMonthYear,
   getEntriesByYear,
-  getAllBetweenDates
+  getAllBetweenDates,
 };
