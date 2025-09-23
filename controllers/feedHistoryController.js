@@ -33,7 +33,7 @@ const getAllBetweenDates = asyncHandler(async (req, res) => {
   const entries = await queries.allEntriesBetweenDates(
     fromDate,
     toDate,
-    userId
+    userId,
   );
   if (!entries) {
     res.status(404).send("Entries not found");

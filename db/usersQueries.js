@@ -39,7 +39,7 @@ async function getAllByHouseholdId(householdId) {
   try {
     return await pool.query(
       "SELECT id, username, household_name, role FROM users INNER JOIN household ON users.household_id = ($1)",
-      [householdId]
+      [householdId],
     );
   } catch (error) {
     console.error("Error fetching users by household ID:", error);
