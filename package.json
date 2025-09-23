@@ -16,7 +16,9 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.15.5",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "helmet": "^4.6.0",
+    "nocache": "^3.0.1"
   },
   "name": "cats-are-liars-backend",
   "version": "1.0.0",
