@@ -1,27 +1,15 @@
 const express = require("express");
-const {
-  getAdminMessage,
-  getProtectedMessage,
-  getPublicMessage,
-} = require("./messages.service.js");
+
+
+const messagesController = require("../controllers/messagesController.js");
 const { validateAccessToken } = require("../middleware/auth0.middleware.js");
 
 const messagesRouter = express.Router();
 
-messagesRouter.get("/public", (req, res) => {
-  res.status(200).json(getPublicMessage());
-});
+messagesRouter.get("/public", messagesController.getPublicMessage);
 
-messagesRouter.get("/protected", validateAccessToken, (req, res) => {
-  const message = getProtectedMessage();
+messagesRouter.get("/protected", validateAccessToken, messagesController.getProtectedMessage);
 
-  res.status(200).json(message);
-});
+messagesRouter.get("/admin", validateAccessToken, messagesController.getAdminMessage);
 
-messagesRouter.get("/admin", validateAccessToken, (req, res) => {
-  const message = getAdminMessage();
-
-  res.status(200).json(message);
-});
-
-module.exports = messagesRouter;
+module.exports =  messagesRouter ;
